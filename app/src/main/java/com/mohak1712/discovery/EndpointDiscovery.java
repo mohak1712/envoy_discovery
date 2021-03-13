@@ -34,12 +34,13 @@ public class EndpointDiscovery extends EndpointDiscoveryServiceGrpc.EndpointDisc
                             .setTypeUrl(value.getTypeUrl())
                             .addResources(Any.newBuilder()
                                     .setTypeUrl(value.getTypeUrl())
-                                    .setValue(ClusterLoadAssignment.getDefaultInstance().toByteString())
+                                    .setValue(ClusterLoadAssignment.getDefaultInstance().toBuilder()
+                                            .setClusterName("some_service")
+                                            .build().toByteString())
                                     .build())
                             .build());
                     return;
                 }
-
                 addresses.forEach(address -> {
                     ClusterLoadAssignment clusterLoadAssignment = ClusterLoadAssignment.newBuilder()
                             .setClusterName("some_service")
